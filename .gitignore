@@ -3,6 +3,8 @@ src/logs/logs.json
 
 # foto
 *.jpeg
+*.jpg
+media/
 
 # database
 *.db
