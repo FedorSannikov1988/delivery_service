@@ -1,4 +1,4 @@
-from .model_db import Buyers, BookReviews
+from .model_db import Buyers, BookReviews, Food
 from .connect_db import SessionLocal
 from sqlalchemy import desc
 from datetime import date
@@ -59,3 +59,19 @@ def search_last_review_buyer_database(id_telegram: int):
         order_by(desc(BookReviews.date_and_time_creation)).first()
     session.close()
     return resalt_request
+
+
+def add_one_dish(price: int,
+                 id_food: int,
+                 img_food: str,
+                 name_food: str,
+                 description_food: str):
+
+    session.add(Food(price=price,
+                     id_food=id_food,
+                     img_food=img_food,
+                     name_food=name_food,
+                     description_food=
+                     description_food))
+    session.commit()
+    session.close()

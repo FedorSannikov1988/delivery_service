@@ -34,3 +34,14 @@ class BookReviews(Base):
     dont_like = Column(String)
     date_and_time_creation = Column(DateTime, default=datetime.now)
     buyer = relationship("Buyers", back_populates="reviews")
+
+
+class Food(Base):
+    __tablename__ = "food"
+
+    #id_food = Column(String, primary_key=True)
+    id_food = Column(Integer, primary_key=True, autoincrement=False)
+    name_food = Column(String)
+    description_food = Column(String)
+    img_food = Column(String)
+    price = Column(Integer)

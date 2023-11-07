@@ -3,9 +3,6 @@ To download all the necessary data to
 start the application /telegram bot
 """
 
-from db_api import creating_database_for_app, Base, engine
-from aiogram.fsm.storage.memory import MemoryStorage
-
 from config import PASSWORD_MANAGER_CREATED_DATABASE, \
                    NAME_MANAGER_CREATED_DATABASE, \
                    NAME_CREATED_DATABASE, \
@@ -13,12 +10,19 @@ from config import PASSWORD_MANAGER_CREATED_DATABASE, \
                    USER_LOG_IN_SERVER, \
                    HOST_SERVER, \
                    PORT_SERVER
+from aiogram.fsm.storage.memory import MemoryStorage
+from db_api import entering_data_into_table_food, \
+                   creating_database_for_app, \
+                   path_for_fixtures, \
+                   engine, \
+                   Base
 from aiogram import Dispatcher, Router, Bot, F
 from answers import path_for_urls, \
                     load_answer_for_user, \
                     path_for_button_names, \
                     path_for_users_answers
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import OperationalError, \
+                           IntegrityError
 from aiogram.enums import ParseMode
 from config import TOKEN_BOT
 from loguru import logger
@@ -74,3 +78,16 @@ except OperationalError as create_table_error:
     logger.error(create_table_error)
 except Exception as all_error_create_table:
     logger.error(all_error_create_table)
+
+# completion table food
+try:
+    entering_data_into_table_food(path_for_file=
+                                  path_for_fixtures)
+except IntegrityError as completion_table_food_error:
+    logger.error(completion_table_food_error)
+except Exception as all_error_completion_table_food:
+    logger.error(all_error_completion_table_food)
+
+
+
+
