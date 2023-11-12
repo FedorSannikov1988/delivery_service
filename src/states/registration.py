@@ -1,7 +1,8 @@
 """
 Class for FSM State
 """
-from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.state import StatesGroup, \
+                              State
 
 
 class BuyerRegistration(StatesGroup):

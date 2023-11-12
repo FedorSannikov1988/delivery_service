@@ -1,10 +1,8 @@
 """
 Starting (getting started) with a telegram bot.
 """
-from db_api import search_buyer, \
-                   add_one_review_buyer_database, \
-                   search_last_review_buyer_database
 from keyboards import AnswerQuestionLeaveReviewOrNot
+from db_api import add_one_review_buyer_in_database
 from aiogram.fsm.context import FSMContext
 from keyboards import leave_review_or_not
 from aiogram.utils.markdown import hbold
@@ -19,7 +17,7 @@ from loader import bot
 
 
 INTERVAL_IN_MINUTES_BETWEEN_REVIEWS: int = 60
-MINIMUM_REVIEW_LENGHT_IN_CHARACTERS: int = 5
+MINIMUM_REVIEW_LENGHT_IN_CHARACTERS: int = 3
 QUESTIONS_DURING_REVIEW: dict = \
     {
         "negative_review_buyer": "Не понравилось:",
@@ -30,16 +28,12 @@ QUESTIONS_DURING_REVIEW: dict = \
 @router_for_main_menu.message(Command("reviews"))
 @router_for_main_menu.message(F.text == "Книга отзывов")
 async def start_reviews(message: types.Message,
-                        state: FSMContext):
-
-    id_telegram: int = message.from_user.id
-    result_search_buyer = search_buyer(id_telegram=id_telegram)
+                        state: FSMContext,
+                        result_search_buyer,
+                        last_review_buyer_from_db):
 
     if result_search_buyer:
 
-        last_review_buyer_from_db = \
-            search_last_review_buyer_database(id_telegram=
-                                              id_telegram)
         if last_review_buyer_from_db:
 
             last_review_buyer_str = \
@@ -139,7 +133,8 @@ async def confirmation_registration(callback: CallbackQuery, state: FSMContext,
     message_id: int = callback.message.message_id
     answer: str = callback_data.answer_question_leave_review_or_not
 
-    await bot.delete_message(chat_id=chat_id, message_id=message_id)
+    await bot.delete_message(chat_id=chat_id,
+                             message_id=message_id)
 
     if answer == 'yes':
         text: str = 'Спасибо Ваш отзыв отправлен'
@@ -155,7 +150,7 @@ async def confirmation_registration(callback: CallbackQuery, state: FSMContext,
         positive_review_buyer: str = \
             fsm_context[keys_for_negative_and_positive_review_buyer[1]]
 
-        add_one_review_buyer_database(
+        add_one_review_buyer_in_database(
             id_telegram=buyer_id,
             dont_like=negative_review_buyer,
             like=positive_review_buyer)

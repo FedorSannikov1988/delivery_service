@@ -16,14 +16,17 @@ from db_api import entering_data_into_table_food, \
                    path_for_fixtures, \
                    engine, \
                    Base
-from aiogram import Dispatcher, Router, Bot, F
-from answers import path_for_urls, \
-                    load_answer_for_user, \
+from answers import path_for_users_answers, \
                     path_for_button_names, \
-                    path_for_users_answers
+                    load_answer_for_user, \
+                    path_for_urls
 from sqlalchemy.exc import OperationalError, \
                            IntegrityError
 from aiogram.enums import ParseMode
+from aiogram import Dispatcher, \
+                    Router, \
+                    Bot, \
+                    F
 from config import TOKEN_BOT
 from loguru import logger
 import psycopg2
@@ -87,7 +90,3 @@ except IntegrityError as completion_table_food_error:
     logger.error(completion_table_food_error)
 except Exception as all_error_completion_table_food:
     logger.error(all_error_completion_table_food)
-
-
-
-

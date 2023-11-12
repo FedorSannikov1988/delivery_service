@@ -7,6 +7,7 @@ from sqlalchemy import ForeignKey, \
                        Boolean, \
                        Column, \
                        String, \
+                       Float,\
                        Date
 
 
@@ -23,6 +24,7 @@ class Buyers(Base):
     default_adder_for_delivery = Column(String(length=250))
     confirmed_account = Column(Boolean)
     reviews = relationship("BookReviews", back_populates="buyer")
+    orders = relationship("Orders", back_populates="buyer")
 
 
 class BookReviews(Base):
@@ -39,9 +41,25 @@ class BookReviews(Base):
 class Food(Base):
     __tablename__ = "food"
 
-    #id_food = Column(String, primary_key=True)
     id_food = Column(Integer, primary_key=True, autoincrement=False)
     name_food = Column(String)
     description_food = Column(String)
     img_food = Column(String)
-    price = Column(Integer)
+    price = Column(Float)
+
+
+class Orders(Base):
+    __tablename__ = "orders"
+
+    id_order = Column(Integer, primary_key=True)
+    id_telegram = Column(Integer, ForeignKey("buyers.id_telegram"))
+    list_dishes = Column(String)
+    cost_food = Column(Float)
+    cost_delivery = Column(Float)
+    full_cost = Column(Float)
+    date_and_time_delivery = Column(DateTime)
+    delivery_address = Column(String)
+    payment_status = Column(Boolean, default=False)
+    delivery_status = Column(Boolean, default=False)
+    time_order_receipt = Column(DateTime, default=datetime.now)
+    buyer = relationship("Buyers", back_populates="orders")

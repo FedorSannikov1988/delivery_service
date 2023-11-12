@@ -1,14 +1,14 @@
 """
 Starting (getting started) with a telegram bot.
 """
+from .processing_data_from_web_app import processing_order_after_registration
 from keyboards import get_answer_question_continue_registration, \
                       AnswerQuestionContinueRegistration, \
                       get_gender_buyer_when_registering, \
                       ChooseGenderWhenRegisteringBuyer
 from validation import ValidationRegistrations
+from db_api import add_one_buyer_in_database
 from aiogram.fsm.context import FSMContext
-from db_api import add_one_buyer_database, \
-                   search_buyer
 from aiogram.utils.markdown import hbold
 from aiogram.types import CallbackQuery
 from loader import router_for_main_menu
@@ -39,7 +39,8 @@ QUESTIONS_DURING_REGISTRATION: dict = \
 
 @router_for_main_menu.message(F.contact)
 async def start_registration(message: types.Message,
-                             state: FSMContext):
+                             state: FSMContext,
+                             search_result_buyer):
     """
     Start user registration .
     """
@@ -48,10 +49,7 @@ async def start_registration(message: types.Message,
         id_telegram_buyer = message.contact.user_id
         telephone_buyer = message.contact.phone_number
 
-        search_result = search_buyer(id_telegram=
-                                     id_telegram_buyer)
-
-        if not search_result:
+        if not search_result_buyer:
 
             await state.update_data({
                 'id_telegram_buyer': id_telegram_buyer,
@@ -163,6 +161,8 @@ async def entering_gender_buyer(message: types.Message,
             date_string=message.text,
             format_date=DATE_FORMAT):
 
+        await state.set_state()
+
         for_lower_bound: timedelta = \
             timedelta(days=
                       NUMBER_DAYS_PER_YEAR * LOWER_AGE_YEARS)
@@ -200,8 +200,6 @@ async def entering_gender_buyer(message: types.Message,
                         "100 лет (процесс регистрации прерван)"
             await message.answer(text=text)
 
-        await state.set_state()
-
     else:
 
         text: str = f"Введите Вашу {hbold('дату рождения')} " \
@@ -234,7 +232,6 @@ async def entering_default_adder_for_delivery(callback: CallbackQuery,
 @router_for_main_menu.message(BuyerRegistration.wait_question_register_or_not)
 async def data_verification_before_registration(message: types.Message,
                                                 state: FSMContext):
-
     chat_id = message.chat.id
     default_adder_for_delivery = message.text
 
@@ -256,7 +253,9 @@ async def data_verification_before_registration(message: types.Message,
     await bot.send_message(**args_for_send_message_heading)
 
     for key_for_fsm, question_text in QUESTIONS_DURING_REGISTRATION.items():
-        text: str = question_text + ': ' + str(fsm_context[key_for_fsm])
+        text: str = question_text + ': ' + \
+                    handler_for_male_female(text=str(fsm_context[key_for_fsm]))
+
         args_for_send_message_text = {
             'text': text,
             'chat_id': chat_id
@@ -271,16 +270,30 @@ async def data_verification_before_registration(message: types.Message,
     await bot.send_message(**args_for_send_message_keyboard)
 
 
+def handler_for_male_female(text: str) -> str:
+
+    if text == 'F':
+        return 'Женщина'
+
+    if text == 'M':
+        return 'Мужчина'
+
+    return text
+
+
 @router_for_main_menu.callback_query(AnswerQuestionContinueRegistration.filter())
 async def confirmation_registration(callback: CallbackQuery,
-                                    state: FSMContext,
-                                    callback_data: AnswerQuestionContinueRegistration):
+                                    callback_data: AnswerQuestionContinueRegistration,
+                                    state: FSMContext):
 
-    chat_id = callback.message.chat.id
-    message_id = callback.message.message_id
-    answer = callback_data.answer_question_continue_registration
+    chat_id: int = callback.message.chat.id
+    message_id: int = callback.message.message_id
+    answer: str = callback_data.answer_question_continue_registration
 
-    await bot.delete_message(chat_id=chat_id, message_id=message_id)
+    await bot.delete_message(chat_id=chat_id,
+                             message_id=message_id)
+
+    fsm_context: dict = await state.get_data()
 
     if answer == "yes":
 
@@ -290,10 +303,6 @@ async def confirmation_registration(callback: CallbackQuery,
                     "(в этой имитации работы аккаунт " \
                     "уже актевирован для дальнейшего " \
                     "тестирования)."
-
-        fsm_context: dict = await state.get_data()
-
-
 
         keys_for_questions_during_registration = \
             list(QUESTIONS_DURING_REGISTRATION.keys())
@@ -318,7 +327,7 @@ async def confirmation_registration(callback: CallbackQuery,
         # in working mode, it is assigned after a call from the manager
         confirmed_account: bool = True
 
-        add_one_buyer_database(
+        add_one_buyer_in_database(
             id_telegram=id_telegram_buyer,
             telephone=telephone_buyer,
             name=name_buyer,
@@ -339,3 +348,7 @@ async def confirmation_registration(callback: CallbackQuery,
             'chat_id': chat_id,
     }
     await bot.send_message(**args_for_send_message)
+
+    if fsm_context.get('order'):
+        await processing_order_after_registration(callback.message,
+                                                  state)

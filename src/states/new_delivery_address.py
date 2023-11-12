@@ -5,7 +5,6 @@ from aiogram.fsm.state import StatesGroup, \
                               State
 
 
-class ReviewsBuyer(StatesGroup):
+class NewDeliveryAddress(StatesGroup):
 
-    wait_negative_review = State()
-    wait_positive_review = State()
+    wait_new_delivery_address = State()

@@ -3,4 +3,6 @@ from .user_keyboards import get_gender_buyer_when_registering, \
                             leave_review_or_not, \
                             ChooseGenderWhenRegisteringBuyer, \
                             AnswerQuestionContinueRegistration, \
-                            AnswerQuestionLeaveReviewOrNot
+                            AnswerQuestionLeaveReviewOrNot, \
+                            selection_for_registered_user, \
+                            AnswerQuestionChoicePaymentOrChangeDeliveryLocation

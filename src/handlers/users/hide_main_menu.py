@@ -20,5 +20,4 @@ async def close_menu(message: types.Message):
     text: str = \
         "Для вызова меню воспользуйтесь командой /start"
     await message.answer(text=text,
-                         reply_markup=
-                         ReplyKeyboardRemove())
+                         reply_markup=ReplyKeyboardRemove())

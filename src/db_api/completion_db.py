@@ -1,4 +1,5 @@
-from .requests_db import add_one_dish
+from .requests_db import add_one_dish_in_database, \
+                         search_dish_in_database
 from pathlib import Path
 import json
 
@@ -10,12 +11,20 @@ def entering_data_into_table_food(path_for_file: str | Path):
             all_food: dict = json.load(file_read_json)
 
         for dish in all_food:
-            add_one_dish(price=dish["price"],
-                         id_food=int(dish["id"][2:]),
-                         img_food=dish["img"],
-                         name_food=dish["name"],
-                         description_food=
-                         dish["description"])
+
+            id_food = int(dish["id"][2:])
+
+            search_result_id_food = \
+                search_dish_in_database(id_food=id_food)
+
+            if not search_result_id_food:
+
+                add_one_dish_in_database(price=dish["price"],
+                                         id_food=id_food,
+                                         img_food=dish["img"],
+                                         name_food=dish["name"],
+                                         description_food=
+                                         dish["description"])
 
     except FileNotFoundError:
         empty_dict: dict = {}

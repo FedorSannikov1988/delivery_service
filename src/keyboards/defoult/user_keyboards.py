@@ -4,8 +4,11 @@ Creating a starting (main) keyboard
 from aiogram.types import ReplyKeyboardMarkup, \
                           KeyboardButton, \
                           WebAppInfo
+from config import URL_FOR_WEB_APP
 
-path_web_url = WebAppInfo(url="https://fedorsannikov1988.github.io/")
+
+path_web_url = WebAppInfo(url=URL_FOR_WEB_APP)
+
 
 main_keyboard = \
     ReplyKeyboardMarkup(
@@ -18,7 +21,7 @@ main_keyboard = \
                 KeyboardButton(text="Меню готовых блюд",
                                web_app=path_web_url),
                 KeyboardButton(text="Мои заказы"),
-                KeyboardButton(text="Регистрация",
+                KeyboardButton(text="Зарегестрироваться",
                                request_contact=True)
             ],
             [

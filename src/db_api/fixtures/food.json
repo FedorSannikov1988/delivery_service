@@ -16,14 +16,14 @@
     {
         "id": "el2",
         "name": "Овсяная каша на молоке",
-        "description": "Каша на молоке, масло. Сделаем на кокосовом молоке. Вес: 260 гр.",
+        "description": "Каша на молоке, масло. Вес: 260 гр.",
         "img": "db_api/media/oatmeal_porridge_with_milk.jpg",
         "price": 170
     },
     {
         "id": "el3",
         "name": "Сырники классические",
-        "description": "Сырники 2 шт. Сделаем на кокосовом молоке. Вес: 140 гр.",
+        "description": "Сырники 2 шт. Вес: 140 гр.",
         "img": "db_api/media/classic_cheesecakes.jpg",
         "price": 230
     },
