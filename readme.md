@@ -21,11 +21,18 @@
 
 <details><summary><strong>Структура базы данных (одна картинка):</strong></summary>
 
-![database_structure](/pictures/database_structure_v1.jpg "database_structure") 
+![database_structure](/pictures/database_structure_v1.jpg "database_structure_v1") 
+<br>
+или 
+<br>
+![database_structure](/pictures/database_structure_v2.jpg "database_structure_v2") 
 
 </details>
 
 <br>
+
+
+Над остальным пока не работал !
 
 <details><summary><strong>Пример работы (картинки):</strong></summary>
 
