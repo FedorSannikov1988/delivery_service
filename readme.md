@@ -1,23 +1,27 @@
-### Пет-проект по созданию интернет магазина на базе телеграмм бота (Telegram API).
+### Пет-проект по созданию службы доставки готовой еды на базе телеграмм бота (Telegram API) и возможностей предоставляемых Telegram WebApp.
 
 ### Цель:
-Создать и оформить интернет магазин на базе телеграм-бота копирующего 
-возможности реального интернет магазина по продаже электроники и 
-бытовой техники: <a href="https://t.me/store_mitech_bot">@store_mitech_bot</a>;
+Создать/написать и оформить телеграм-бота предоставляющего возможность 
+пользователю заказать готовую еду из меню реализованного на базе 
+возможностей Telegram WebApp.
 <br>
-В качестве образца был выбран <a href="https://t.me/store_mitech_bot">@store_mitech_bot</a> 
-так он обладает наиболее полными (интересным) с точки зрения воплощения каталогом товаров.
+В качестве источника информации был использован: 
+<a href="https://klient-vsegda-love.ru/">Клиент всегда Love</a>
+<br>
+<a href="https://fedorsannikov1988.github.io/index.html">Меню</a> 
+использующее возможности Telegram WebApp реализовано в этом проекте: 
+<a href="https://github.com/FedorSannikov1988/FedorSannikov1988.github.io.git">Telegram WebApp</a>.
 
 ### Технологии и инструменты:
 - Язык программирования: Python версии 3.10; 
-- СУБД: SQLite в асинхронном режиме (библиотека aiosqlite);
+- СУБД: PostgreSQL версии 14 управляемая по средствам SQLAlchemy версии 2.0.22;
 - Инструменты разработки: IDE PyCharm .
 - Взаимодействие с Telegram API: aiogram 3.0.0
 - Версионный контроль: Git.
 
 <details><summary><strong>Структура базы данных (одна картинка):</strong></summary>
 
-![database_structure](/pictures/database_structure.jpg "database_structure") 
+![database_structure](/pictures/database_structure_v1.jpg "database_structure") 
 
 </details>
 
