@@ -38,7 +38,6 @@ def add_one_buyer_in_database(id_telegram: int,
     :param confirmed_account:
     :return: None
     """
-
     day, month, year = to_create_date(input_date=birth_date)
 
     session.add(Buyers(id_telegram=id_telegram,
@@ -55,6 +54,12 @@ def add_one_buyer_in_database(id_telegram: int,
 
 
 def search_buyer_in_database(id_telegram: int):
+    """
+    Search for a buyer in the database by id.
+
+    :param id_telegram: int
+    :return: Buyers
+    """
     resalt_request = session.query(Buyers).\
         filter(Buyers.id_telegram == id_telegram).first()
     session.close()
@@ -64,7 +69,14 @@ def search_buyer_in_database(id_telegram: int):
 def add_one_review_buyer_in_database(id_telegram: int,
                                      dont_like: str,
                                      like: str) -> None:
+    """
+    Adding a review (record) to the table book_reviews.
 
+    :param id_telegram: int
+    :param dont_like: str
+    :param like: str
+    :return: None
+    """
     session.add(BookReviews(id_telegram=id_telegram,
                             dont_like=dont_like,
                             like=like))
@@ -72,8 +84,13 @@ def add_one_review_buyer_in_database(id_telegram: int,
     session.close()
 
 
-def search_last_review_buyer_in_database(id_telegram: int):
+def search_last_review_buyer_in_database(id_telegram: int) -> BookReviews:
+    """
+    Search for the buyer's last order.
 
+    :param id_telegram:
+    :return: BookReviews
+    """
     resalt_request = session.query(BookReviews.date_and_time_creation).\
         filter(BookReviews.id_telegram == id_telegram).\
         order_by(desc(BookReviews.date_and_time_creation)).first()
@@ -86,7 +103,16 @@ def add_one_dish_in_database(price: float,
                              img_food: str,
                              name_food: str,
                              description_food: str):
+    """
 
+
+    :param price:
+    :param id_food:
+    :param img_food:
+    :param name_food:
+    :param description_food:
+    :return:
+    """
     session.add(Food(price=price,
                      id_food=id_food,
                      img_food=img_food,
