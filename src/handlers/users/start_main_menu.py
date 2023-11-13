@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for getting the main menu.
 """
 from aiogram.utils.markdown import hunderline, \
                                    hlink, \

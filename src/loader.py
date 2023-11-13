@@ -1,6 +1,6 @@
 """
-To download all the necessary data to
-start the application /telegram bot
+Assembly of all application components and variables
+(I mean environment variables) necessary for its launch/operation.
 """
 
 from config import PASSWORD_MANAGER_CREATED_DATABASE, \

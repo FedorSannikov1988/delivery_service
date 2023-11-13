@@ -126,7 +126,7 @@ def add_one_dish_in_database(price: float,
     session.close()
 
 
-def search_dish_in_database(id_food: int) -> None:
+def search_dish_in_database(id_food: int) -> Food:
     """
     Search for dishes by id in the database.
 

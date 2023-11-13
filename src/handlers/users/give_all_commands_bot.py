@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for receiving all commands available to the user.
 """
 from loader import router_for_main_menu
 from loader import all_answer_for_user

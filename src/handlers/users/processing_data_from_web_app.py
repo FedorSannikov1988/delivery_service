@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for downloading/receiving data from the Telegram WebApp.
 """
 from keyboards import AnswerQuestionChoicePaymentOrChangeDeliveryLocation, \
                       selection_for_registered_user
@@ -30,7 +30,14 @@ ORDER_SAVING_TIME_MIN = 15
 async def web_app_data_entry(message: types.Message,
                              state: FSMContext,
                              search_result_buyer):
+    """
+    Getting data from WebApp Telegram.
 
+    :param message: types.Message
+    :param state: FSMContext
+    :param search_result_buyer: Buyers
+    :return: None
+    """
     chat_id: int = message.chat.id
     id_telegram: int = message.from_user.id
     order_str: str = message.web_app_data.data
@@ -133,6 +140,15 @@ async def web_app_data_entry(message: types.Message,
 
 async def processing_order_after_registration(message: types.Message,
                                               state: FSMContext):
+    """
+    To process data received from the WebApp immediately after
+    user registration. This function is called in the buyer_registration
+    module if the user is not registered but has placed an order.
+
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
+    """
 
     fsm_context: dict = await state.get_data()
 
@@ -241,6 +257,14 @@ async def processing_order_after_registration(message: types.Message,
                                      "change_delivery_location"))
 async def entering_new_delivery_address(callback: CallbackQuery,
                                         state: FSMContext):
+    """
+    Event processing (the button is pressed) change the
+    delivery address.
+
+    :param callback: CallbackQuery
+    :param state: FSMContext
+    :return: None
+    """
 
     chat_id: int = callback.message.chat.id
     message_id: int = callback.message.message_id
@@ -262,6 +286,14 @@ async def entering_new_delivery_address(callback: CallbackQuery,
 async def select_action_new_address_or_payment(message: types.Message,
                                                state: FSMContext,
                                                last_order_buyer):
+    """
+    Getting a new delivery address.
+
+    :param message:types.Message
+    :param state: FSMContext
+    :param last_order_buyer: Orders
+    :return: None
+    """
     await state.set_state()
 
     new_delivery_address: str = message.text
@@ -288,7 +320,13 @@ async def select_action_new_address_or_payment(message: types.Message,
                                      F.payment_or_change_delivery_location == "pay"))
 async def start_payment(callback: CallbackQuery,
                         last_order_buyer):
+    """
+    Event processing (the button is pressed) pay.
 
+    :param callback: CallbackQuery
+    :param last_order_buyer: Orders
+    :return: None
+    """
     full_cost_for_description: float = last_order_buyer.full_cost
 
     full_cost = full_cost_for_description * 100
@@ -317,6 +355,13 @@ async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
 @router_for_main_menu.message(F.successful_payment)
 async def successful_payment(message: types.Message,
                              last_order_buyer):
+    """
+    Processing the successful payment event.
+
+    :param message: types.Message
+    :param last_order_buyer: Orders
+    :return: None
+    """
 
     id_last_order_buyer: int = last_order_buyer.id_order
 

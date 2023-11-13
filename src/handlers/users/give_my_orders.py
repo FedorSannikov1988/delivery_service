@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+Module for receiving/viewing all orders made by the user.
 """
 from aiogram.fsm.context import FSMContext
 from loader import router_for_main_menu, \
@@ -15,7 +15,14 @@ from aiogram import types, F
 async def give_my_orders(message: types.Message,
                          number_orders_buyer: int,
                          state: FSMContext):
+    """
+    Reaction to a command /my_orders or button press "Мои заказы"
 
+    :param message: types.Message
+    :param number_orders_buyer: int
+    :param state: FSMContext
+    :return: None
+    """
     if number_orders_buyer > 0:
 
         text: str = \
@@ -39,6 +46,15 @@ async def enter_number_orders(message: types.Message,
                               number_orders_buyer: int,
                               prepared_list_orders: list,
                               state: FSMContext):
+    """
+    Processing the entered number of orders for viewing.
+
+    :param message: types.Message
+    :param number_orders_buyer: int
+    :param prepared_list_orders: list
+    :param state: FSMContext
+    :return: None
+    """
 
     number_orders_str: str = message.text
 
@@ -64,9 +80,9 @@ async def enter_number_orders(message: types.Message,
                     f'Адрес доставки: ' + \
                     str(order['delivery_address']) + '\n' \
                     f'Статус оплаты: ' + \
-                    f'{handler_for_true_false(data=order["payment_status"])}' + '\n' \
+                    f'{__handler_for_true_false(data=order["payment_status"])}' + '\n' \
                     'Статус доставки: ' + \
-                    f'{handler_for_true_false(data=order["delivery_status"])}' + '\n' \
+                    f'{__handler_for_true_false(data=order["delivery_status"])}' + '\n' \
                     f'Подробное описание содержания заказа:'
                 await message.answer(text=title_order)
 
@@ -105,8 +121,14 @@ async def enter_number_orders(message: types.Message,
         await message.answer(text=text)
 
 
-def handler_for_true_false(data: bool) -> str:
+def __handler_for_true_false(data: bool) -> str:
+    """
+    To process the request value (completed or not).
+    Only for use inside the module.
 
+    :param data: bool
+    :return: str
+    """
     if data:
         return 'Выполнено'
     else:

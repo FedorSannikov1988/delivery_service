@@ -23,7 +23,15 @@ class NumberOrdersBuyer(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Outputs to the event handler the number of
+        orders made by the registered user .
 
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: int
+        """
         text_or_command: str = event.text
 
         search_text_one: str = "Мои заказы"
@@ -50,7 +58,14 @@ class SuccessfulPaymentBuyer(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns the last order of the buyer upon successful payment.
 
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: Orders
+        """
         if event.successful_payment:
 
             id_telegram_buyer: int = event.from_user.id
@@ -71,7 +86,14 @@ class BookReviews(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns the user's last review to the event handler (feedback book).
 
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: BookReviews
+        """
         text_or_command: str = event.text
 
         search_text_one: str = "Книга отзывов"
@@ -108,6 +130,15 @@ class BuyerSearchDuringRegistration(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns the buyer from the buyers table to the event handler
+        after sending the user's contact (clicking the Register button).
+
+        :param handler:  Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: Buyers
+        """
 
         if event.contact:
 
@@ -129,6 +160,15 @@ class BuyerSearchWhenReceivingDataFromWebApp(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns the buyer from the buyers table when
+        receiving data from the webapp Telegram.
+
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event:  Message
+        :param data: Dict[str, Any]
+        :return: Buyers
+        """
 
         if event.web_app_data:
             id_telegram_buyer = event.from_user.id
@@ -149,6 +189,16 @@ class GetAllOrders(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns all the buyer's orders sorted from the last to
+        the first number of orders. Responds to FSM State:
+        EnteringNumberOrders().wait_number_orders.
+
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: int, Orders
+        """
 
         search_fsm_state: str = "wait_number_orders"
 
@@ -212,7 +262,15 @@ class SelectActionNewAddres(BaseMiddleware):
             event: Message,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Register an FSM State NewDeliveryAddress.wait_new_delivery_address.
+        turns the buyer's last order.
 
+        :param handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]]
+        :param event: Message
+        :param data: Dict[str, Any]
+        :return: Orders
+        """
         search_fsm_state: str = "wait_new_delivery_address"
 
         fsm_state: str = data['raw_state']
@@ -241,6 +299,14 @@ class LastOrderBuyerStartPayment(BaseMiddleware):
             event: CallbackQuery,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Returns the buyer's last order when choosing payment.
+
+        :param handler: Callable[[CallbackQuery, Dict[str, Any]], Awaitable[Any]]
+        :param event: CallbackQuery
+        :param data: Dict[str, Any]
+        :return: Orders
+        """
 
         search_callback_one: str = \
             'pay_or_change_delivery_location:pay'

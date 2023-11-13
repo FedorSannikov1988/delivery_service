@@ -1,6 +1,6 @@
 """
-1 - Loading a token for a bot from environment variables
-2 -
+Loading all necessary parameters, addresses,
+token, keys from environment variables.
 """
 from dotenv import load_dotenv
 import os

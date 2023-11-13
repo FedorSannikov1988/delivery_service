@@ -1,5 +1,6 @@
 """
-Class for FSM State
+Class in the module for FSM State used when
+registering a user/buyer.
 """
 from aiogram.fsm.state import StatesGroup, \
                               State
@@ -7,7 +8,7 @@ from aiogram.fsm.state import StatesGroup, \
 
 class BuyerRegistration(StatesGroup):
     """
-    Buyer registration chains.
+    Used in buyer registration.
     """
     wait_name = State()
     wait_surname = State()

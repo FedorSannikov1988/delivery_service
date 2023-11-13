@@ -1,5 +1,5 @@
 """
-Creating a starting (main) keyboard
+Main keyboard.
 """
 from aiogram.types import ReplyKeyboardMarkup, \
                           KeyboardButton, \

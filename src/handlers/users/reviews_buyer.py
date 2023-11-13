@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for filling out the book of reviews about the service nomad.
 """
 from keyboards import AnswerQuestionLeaveReviewOrNot
 from db_api import add_one_review_buyer_in_database
@@ -31,7 +31,15 @@ async def start_reviews(message: types.Message,
                         state: FSMContext,
                         result_search_buyer,
                         last_review_buyer_from_db):
+    """
+    Reaction to a command /reviews or button press "Книга отзывов".
 
+    :param message: types.Message
+    :param state: FSMContext
+    :param result_search_buyer: Buyers
+    :param last_review_buyer_from_db: BookReviews
+    :return: None
+    """
     if result_search_buyer:
 
         if last_review_buyer_from_db:
@@ -49,8 +57,8 @@ async def start_reviews(message: types.Message,
 
             if time_next_review_possible <= datetime.now():
 
-                await start_reviews_good_answer(message=message,
-                                                state=state)
+                await __start_reviews_good_answer(message=message,
+                                                  state=state)
 
             else:
 
@@ -60,8 +68,8 @@ async def start_reviews(message: types.Message,
                 await message.answer(text=text)
         else:
 
-            await start_reviews_good_answer(message=message,
-                                            state=state)
+            await __start_reviews_good_answer(message=message,
+                                              state=state)
     else:
 
         text: str = f'Оставлять отзывы могут только ' \
@@ -69,7 +77,7 @@ async def start_reviews(message: types.Message,
         await message.answer(text=text)
 
 
-async def start_reviews_good_answer(message, state):
+async def __start_reviews_good_answer(message, state):
     text: str = f'Опишите что Вам {hbold("не понравилось:")}'
     await message.answer(text=text)
     await state.set_state(ReviewsBuyer.wait_negative_review)
@@ -78,7 +86,13 @@ async def start_reviews_good_answer(message, state):
 @router_for_main_menu.message(ReviewsBuyer.wait_negative_review)
 async def enter_negative_review(message: types.Message,
                                 state: FSMContext):
+    """
+    Handler for receiving and processing (validating) negative feedback.
 
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
+    """
     negative_review = message.text
 
     if ValidationReviews().validation_long_reviews(
@@ -98,7 +112,13 @@ async def enter_negative_review(message: types.Message,
 @router_for_main_menu.message(ReviewsBuyer.wait_positive_review)
 async def enter_positive_review(message: types.Message,
                                 state: FSMContext):
+    """
+    Handler for receiving and processing (validating) positive feedback.
 
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
+    """
     positive_review = message.text
 
     if ValidationReviews().validation_long_reviews(
@@ -125,8 +145,18 @@ async def enter_positive_review(message: types.Message,
 
 
 @router_for_main_menu.callback_query(AnswerQuestionLeaveReviewOrNot.filter())
-async def confirmation_registration(callback: CallbackQuery, state: FSMContext,
-                                    callback_data: AnswerQuestionLeaveReviewOrNot):
+async def confirmation_leaving_review(callback: CallbackQuery,
+                                      state: FSMContext,
+                                      callback_data: AnswerQuestionLeaveReviewOrNot):
+    """
+    Handler for output of previously entered
+    reviews and confirmation of leaving a review.
+
+    :param callback: CallbackQuery
+    :param state: FSMContext
+    :param callback_data: AnswerQuestionLeaveReviewOrNot
+    :return: None
+    """
 
     buyer_id: int = callback.from_user.id
     chat_id: int = callback.message.chat.id

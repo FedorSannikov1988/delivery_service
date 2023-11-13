@@ -1,5 +1,5 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for registering the user in the database .
 """
 from .processing_data_from_web_app import processing_order_after_registration
 from keyboards import get_answer_question_continue_registration, \
@@ -42,7 +42,12 @@ async def start_registration(message: types.Message,
                              state: FSMContext,
                              search_result_buyer):
     """
-    Start user registration .
+    Start user registration (getting the user's contact).
+
+    :param message: types.Message
+    :param state: FSMContext
+    :param search_result_buyer: Buyers
+    :return: None
     """
     if message.contact.user_id == message.from_user.id:
 
@@ -73,6 +78,10 @@ async def entering_name_buyer(message: types.Message,
                               state: FSMContext):
     """
     Entering name buyer.
+
+    :param message: types.Message
+    :param state: state: FSMContext
+    :return: None
     """
     name_buyer = message.text
 
@@ -100,6 +109,10 @@ async def entering_surname_buyer(message: types.Message,
                                  state: FSMContext):
     """
     Entering surname buyer.
+
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
     """
     surname_buyer = message.text
 
@@ -127,6 +140,10 @@ async def entering_patronymic_buyer(message: types.Message,
                                     state: FSMContext):
     """
     Entering patronymic buyer.
+
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
     """
     patronymic_buyer = message.text
 
@@ -154,6 +171,10 @@ async def entering_gender_buyer(message: types.Message,
                                 state: FSMContext):
     """
     Entering gender buyer.
+
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
     """
     birth_date_buyer = message.text
 
@@ -212,7 +233,14 @@ async def entering_gender_buyer(message: types.Message,
 async def entering_default_adder_for_delivery(callback: CallbackQuery,
                                               callback_data: ChooseGenderWhenRegisteringBuyer,
                                               state: FSMContext):
+    """
+    Getting the selected gender of the buyer.
 
+    :param callback: CallbackQuery
+    :param callback_data: ChooseGenderWhenRegisteringBuyer
+    :param state: FSMContext
+    :return: None
+    """
     chat_id = callback.message.chat.id
     gender_buyer = callback_data.gender
 
@@ -232,6 +260,14 @@ async def entering_default_adder_for_delivery(callback: CallbackQuery,
 @router_for_main_menu.message(BuyerRegistration.wait_question_register_or_not)
 async def data_verification_before_registration(message: types.Message,
                                                 state: FSMContext):
+    """
+    Output of data previously entered by the user for verification.
+
+    :param message: types.Message
+    :param state: FSMContext
+    :return: None
+    """
+
     chat_id = message.chat.id
     default_adder_for_delivery = message.text
 
@@ -254,7 +290,7 @@ async def data_verification_before_registration(message: types.Message,
 
     for key_for_fsm, question_text in QUESTIONS_DURING_REGISTRATION.items():
         text: str = question_text + ': ' + \
-                    handler_for_male_female(text=str(fsm_context[key_for_fsm]))
+                    __handler_for_male_female(text=str(fsm_context[key_for_fsm]))
 
         args_for_send_message_text = {
             'text': text,
@@ -270,7 +306,14 @@ async def data_verification_before_registration(message: types.Message,
     await bot.send_message(**args_for_send_message_keyboard)
 
 
-def handler_for_male_female(text: str) -> str:
+def __handler_for_male_female(text: str) -> str:
+    """
+    Processing the gender value coming from the database.
+    Used inside the module.
+
+    :param text: str
+    :return: str
+    """
 
     if text == 'F':
         return 'Женщина'
@@ -285,7 +328,15 @@ def handler_for_male_female(text: str) -> str:
 async def confirmation_registration(callback: CallbackQuery,
                                     callback_data: AnswerQuestionContinueRegistration,
                                     state: FSMContext):
+    """
+    Processing the request (InlineKeyboar ->
+    get_answer_question_continue_registration()) to register or not.
 
+    :param callback: CallbackQuery
+    :param callback_data: AnswerQuestionContinueRegistration
+    :param state: FSMContext
+    :return: None
+    """
     chat_id: int = callback.message.chat.id
     message_id: int = callback.message.message_id
     answer: str = callback_data.answer_question_continue_registration

@@ -27,6 +27,7 @@ def load_answer_for_user(path_for_file: str | Path):
             json.dump(empty_dict, file_create_json)
 
 
+#paths to data files
 path_for_urls = \
     Path('answers', 'users', 'data_storage', 'urls.json')
 path_for_users_answers = \

@@ -1,7 +1,5 @@
 """
-Validation of input parameters
-(date of receipt, time of receipt,
-recipient's name) for delivery.
+Data validation module during user registration .
 """
 from datetime import datetime
 import re
@@ -11,7 +9,7 @@ class ValidationRegistrations:
 
     def validation_name_surname_patronymic(self, text: str, max_len: int) -> bool:
         """
-        Name Validation
+        Validation name, surname, patronymic
 
         :param max_len: int
         :return: bool
@@ -23,7 +21,7 @@ class ValidationRegistrations:
 
     def validation_data(self, date_string: str, format_date: str) -> bool:
         """
-        Data Validation
+        Validation data
 
         :param date_string: str
         :param format_date: str

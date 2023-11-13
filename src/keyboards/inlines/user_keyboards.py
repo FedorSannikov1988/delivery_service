@@ -1,5 +1,5 @@
 """
-All keyboards for users .
+All Inline Keyboard for users .
 """
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from .callback_data import AnswerQuestionLeaveReviewOrNot, \
@@ -34,6 +34,11 @@ def get_gender_buyer_when_registering():
 
 
 def get_answer_question_continue_registration():
+    """
+    Keyboard for selecting continue registration or not.
+
+    :return: InlineKeyboardMarkup
+    """
     builder = InlineKeyboardBuilder()
 
     builder.button(
@@ -56,7 +61,11 @@ def get_answer_question_continue_registration():
 
 
 def leave_review_or_not():
+    """
+    Keyboard for selecting cleave a review or not.
 
+    :return: InlineKeyboardMarkup
+    """
     builder = InlineKeyboardBuilder()
 
     builder.button(
@@ -79,7 +88,11 @@ def leave_review_or_not():
 
 
 def selection_for_registered_user():
+    """
+    Keyboard for selecting change the delivery address or not.
 
+    :return: InlineKeyboardMarkup
+    """
     builder = InlineKeyboardBuilder()
 
     builder.button(

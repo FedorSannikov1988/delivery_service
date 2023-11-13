@@ -1,5 +1,6 @@
 """
-Starting (getting started) with a telegram bot.
+The module is responsible for obtaining the data of the
+developer of this product.
 """
 from loader import router_for_main_menu
 from aiogram.filters import Command
