@@ -1,3 +1,7 @@
+"""
+Module with database queries.
+Session loaded from connect_db.
+"""
 from .connect_db import SessionLocal
 from sqlalchemy import desc, update
 from .model_db import BookReviews, \
@@ -20,6 +24,20 @@ def add_one_buyer_in_database(id_telegram: int,
                               gender: str,
                               default_adder_for_delivery: str,
                               confirmed_account: bool) -> None:
+    """
+    Adds the buyer after registration to the database.
+
+    :param id_telegram: int
+    :param telephone: str
+    :param name: str
+    :param surname: str
+    :param patronymic: str
+    :param birth_date: str
+    :param gender: str
+    :param default_adder_for_delivery:
+    :param confirmed_account:
+    :return: None
+    """
 
     day, month, year = to_create_date(input_date=birth_date)
 

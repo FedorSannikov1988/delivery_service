@@ -1,3 +1,8 @@
+"""
+The module requires a connection to the database.
+In this module, a session engine and a base
+object for models are created.
+"""
 from config import PASSWORD_MANAGER_CREATED_DATABASE, \
                    NAME_MANAGER_CREATED_DATABASE, \
                    NAME_CREATED_DATABASE, \

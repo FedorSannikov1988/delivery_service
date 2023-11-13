@@ -1,11 +1,21 @@
+"""
+Module for filling in the food table.
+"""
 from .requests_db import add_one_dish_in_database, \
                          search_dish_in_database
 from pathlib import Path
 import json
 
 
-def entering_data_into_table_food(path_for_file: str | Path):
+def entering_data_into_table_food(path_for_file: str | Path) -> None:
+    """
+    A function for filling in the food table in the database .
+    The function checks if there is data in the table and if
+    there is none, supplements the food table.
 
+    :param path_for_file: str
+    :return: None
+    """
     try:
         with open(path_for_file, 'r', encoding='utf-8') as file_read_json:
             all_food: dict = json.load(file_read_json)

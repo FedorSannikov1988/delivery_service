@@ -20,7 +20,6 @@ def creating_database_for_app(host_server: str, port_server: str,
     :param password_manager_created_database: str
     :return: None
     """
-
     host = host_server
     port = port_server
     user = user_log_in_server

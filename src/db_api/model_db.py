@@ -1,3 +1,7 @@
+"""
+Description of all models
+(in fact, tables in the database).
+"""
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from .connect_db import Base
