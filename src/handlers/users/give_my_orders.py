@@ -19,10 +19,10 @@ async def give_my_orders(message: types.Message,
     if number_orders_buyer > 0:
 
         text: str = \
-            "Вы сделали " + str(number_orders_buyer) + " заказов. " \
+            "Вы сделали заказов: " + str(number_orders_buyer) + " ." \
             "Введите количество заказов начиная " \
-            "с последнего информацию о которых " \
-            "хотите увидеть:"
+            "с последнего сделанного Вами " \
+            "информацию о которых хотите увидеть."
 
         await state.set_state(EnteringNumberOrders.wait_number_orders)
 
@@ -89,17 +89,19 @@ async def enter_number_orders(message: types.Message,
 
         else:
             text: str = \
-                "Вы сделали " + str(number_orders_buyer) + " заказов. " \
-                "Введите количесво заказов начиная " \
-                "с последнего которое увидеть."
+                "Вы сделали заказов: " + str(number_orders_buyer) + " ." \
+                "Введите количество заказов начиная " \
+                "с последнего сделанного Вами " \
+                "информацию о которых хотите увидеть."
             await message.answer(text=text)
 
     except ValueError:
 
         text: str = \
-            "Вы сделали " + str(number_orders_buyer) + " заказов. " \
-            "Введите количесво заказов начиная " \
-            "с последнего которое увидеть."
+            "Вы сделали заказов: " + str(number_orders_buyer) + " ." \
+            "Введите количество заказов начиная " \
+            "с последнего сделанного Вами " \
+            "информацию о которых хотите увидеть."
         await message.answer(text=text)
 
 

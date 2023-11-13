@@ -21,67 +21,109 @@
 
 <details><summary><strong>Структура базы данных (одна картинка):</strong></summary>
 
-![database_structure](/pictures/database_structure_v1.jpg "database_structure_v1") 
-<br>
-или 
-<br>
-![database_structure](/pictures/database_structure_v2.jpg "database_structure_v2") 
+![database_structure](/pictures/database_structure.jpg "database_structure") 
 
 </details>
 
 <br>
 
-
-Над остальным пока не работал !
 
 <details><summary><strong>Пример работы (картинки):</strong></summary>
 
 #### Начало работы:
 
-![start1](/pictures/bot_start_1.jpg "start1") 
+![start1](/pictures/bot_start_work.png "start work") 
 
 #### Команда /start:
 
-![start2](/pictures/bot_start_2.jpg "start2")
+![start2](/pictures/bot_command_start.png "command start")
 
-#### Команда /help:
+#### Команда /help или кнопка Помощь:
 
-![help](/pictures/bot_help.jpg "help") 
+![help](/pictures/bot_command_help.png "command help") 
 
-#### Выбор категории устройства (команда /catalog):
+#### Команда /manual или кнопка Инструкция:
 
-![catalog_categories](/pictures/bot_catalog_categories.jpg "catalog_categories")
+![catalog_categories](/pictures/bot_command_manual.png "command manual")
 
-#### Выбор производителя устройства:
+#### Команда /developer или кнопка Разработчик:
 
-![catalog_manufacturer](/pictures/bot_catalog_manufacturer.jpg "catalog_manufacturer")
+![catalog_manufacturer](/pictures/bot_command_developer.png "command developer")
 
-#### Выбор по названию/модели устройства:
+#### Команда /hide_menu или кнопка Скрыть меню:
 
-![catalog_name_devices](/pictures/bot_catalog_name_device.jpg "catalog_name_devices")
+![catalog_name_devices](/pictures/bot_command_hide_menu.png "command hide_menu")
 
-#### Вывод информации о выбранном устройстве вариант №1 (без прокрутки):
+#### Команда /reviews или кнопка Книга отзывов:
 
-![catalog_name_device_and_picture](/pictures/bot_catalog_name_device_and_picture.jpg "catalog_name_device_and_picture")
+![catalog_name_devices](/pictures/bot_command_reviews.png "command reviews")
 
-#### Вывод информации о выбранном устройстве (нажата кнопка "Все устройства" в предыдущем меню) вариант №2 (с прокруткой):
+#### Зарегестрироваться:
 
-![catalog_all_device](/pictures/bot_catalog_all_device.jpg "catalog_all_device")
+![catalog_name_devices](/pictures/register.png "register")
+
+#### Меню готовых блюд:
+
+![catalog_name_devices](/pictures/menu.png "menu")
+
+#### Доставка:
+
+![catalog_name_devices](/pictures/delivery.png "delivery")
+
+#### Получение данных из WebApp в боте (первая часть):
+
+![catalog_name_devices](/pictures/order_part_one.png "order_part_one")
+
+#### Получение данных из WebApp в боте (вторая часть):
+
+![catalog_name_devices](/pictures/order_part_two.png "order_part_two")
+
+#### Команда /orders:
+
+![catalog_name_devices](/pictures/bot_command_my_orders.png "orders")
 
 </details>
 
 ### Запуск:
 
-1. Скачать архив с файлом базы данных и медиа файлами можно по ссылке:
-<a href="https://disk.yandex.ru/d/EAYgSwzjhibbJA">база данных и медиа файлы (картинки)</a>
-и разместить: ***<u>"директорию размещения проекта/product_catalog/src/db_api/database
-(папка из скаченного архива)"</u>***. Так же для создания или работы с базой данных можно использовать SQL-script расположенный:
-***<u>"директория размещения проекта/product_catalog/src/db_api/database/for_create_shop_database.sql"</u>***.
-Однако при создании базы данных таким образом необходимо учитывать отсутствие медиа файлов.
+1. Скачать архив с медиа файлами формата jpg по ссылке:
+<a href="https://disk.yandex.ru/d/CfaybbkfhfS1DA">медиа файлы (картинки)</a> 
+и разместить: ***<u>"директорию размещения проекта/src/db_api/media
+(папка из скаченного архива)"</u>***.
 2. Создать файл .env (использутся для хранения переменных окружения 
-в проекте) в дирректории telegram_bot: ***<u>"директория размещения 
-проекта/telegram_bot/.env"</u>*** после чего указать в нем токен для телеграм-бота 
-в переменной TOKEN_FOR_BOT (следующим образом TOKEN_FOR_BOT=).
-3. Установить все зависимости/библиотеки указанные в requirements.txt
-4. Запустить выполнение файла app.py.
+в проекте): ***<u>"директория размещения проекта/.env"</u>***.
+3. Формат файла .env:
 
+TOKEN_FOR_BOT=токен телеграм бота
+
+HOST_SERVER=адрес сервера PostgreSQL к примеру localhost (если сервер размещен на вашем ПК)
+
+PORT_SERVER=номер порта сервера PostgreSQL для подключения обычно это 5432
+
+USER_LOG_IN_SERVER=логин для входа на сервер к примеру postgres
+
+#### ! ВАЖНО: пользователь указанный в USER_LOG_IN_SERVER должен иметь права на создание базы данных (так как мы будем создавать свою базу данных)!
+
+PASSWORD_LOG_IN_SERVER=пароль необходимый для входа на сервер пользователю указанному в USER_LOG_IN_SERVER
+
+NAME_CREATED_DATABASE=имя для создаваемой базы данных к примеру food_delivery_service_in_telegram
+
+NAME_MANAGER_CREATED_DATABASE=имя для создаваемого пользователя управляющего базой данных к примеру user_for_food_delivery_service_in_telegram
+
+PASSWORD_MANAGER_CREATED_DATABASE=пароль для пользователя указанного в NAME_MANAGER_CREATED_DATABASE 
+
+TOKEN_FOR_UPAY=токен полученный у системы оплаты upay
+
+URL_FOR_WEB_APP=https://fedorsannikov1988.github.io/index.html
+
+URL_FOR_WEB_APP не менять так как это ссылка на WebApp Telegram .
+
+Обратите внимание модуль create_db.py отвечает за создание базы 
+данных на сервере PostgreSQL и при повторном запуске будет выведено 
+сообщение в консоль:
+***<u>2023-11-13 02:49:24.822 | ERROR    | loader:<module>:75 - ОШИБКА:  
+база данных "food_delivery_service_in_telegram" уже существует</u>***.
+Это означает, что база данных уже сущесвует. Сообщение будет автоматически 
+сохранено в logs.
+4. Установить все зависимости/библиотеки указанные в requirements.txt
+5. Запустить выполнение файла app.py.

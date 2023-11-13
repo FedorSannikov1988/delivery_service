@@ -323,4 +323,8 @@ async def successful_payment(message: types.Message,
     update_payment_status_in_database(id_order=id_last_order_buyer,
                                       payment_status=True)
 
-    await message.answer(text='Ваш заказ оплачен')
+    text = 'Ваш заказ оплачен. ' \
+           'С Вами свяжутся для ' \
+           'подтверждения (валидация ' \
+           'заказа оператором).'
+    await message.answer(text=text)
